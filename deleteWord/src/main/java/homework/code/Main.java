@@ -8,7 +8,7 @@ public class Main {
             ArgsHandler validateArgs = new ArgsHandler(args);
             FileHandler fileHandler = new FileHandler(validateArgs.getWordToDelete(), validateArgs.getFileName());
 
-            fileHandler.deleteWord();
+            fileHandler.processFile();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

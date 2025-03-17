@@ -17,30 +17,7 @@ public class FileHandler {
         }
     }
 
-    void deleteWord() throws IOException {
-        validateFile();
-        File tempFile = File.createTempFile("output", ".txt", this.file.getParentFile());
-        String charset = "UTF-8";
-
-        try (
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.file), charset));
-                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), charset));
-        ) {
-            manipulateFile(reader, writer);
-        }
-
-        if(!this.file.delete()) {
-            throw new IOException("Unable to delete file");
-        }
-
-        if(!tempFile.renameTo(this.file)) {
-            throw new IOException("Unable to rename file");
-        }
-
-        System.out.println("File updated successful");
-    }
-
-    void manipulateFile(BufferedReader reader,  PrintWriter writer) throws IOException {
+    void deleteWord(BufferedReader reader,  PrintWriter writer) throws IOException {
         String line;
         boolean firstLine = true;
 
@@ -59,4 +36,26 @@ public class FileHandler {
         }
     }
 
+    void processFile() throws IOException {
+        validateFile();
+        File tempFile = File.createTempFile("output", ".txt", this.file.getParentFile());
+        String charset = "UTF-8";
+
+        try (
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(this.file), charset));
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(tempFile), charset));
+        ) {
+            deleteWord(reader, writer);
+        }
+
+        if(!this.file.delete()) {
+            throw new IOException("Unable to delete file");
+        }
+
+        if(!tempFile.renameTo(this.file)) {
+            throw new IOException("Unable to rename file");
+        }
+
+        System.out.println("File updated successful");
+    }
 }
